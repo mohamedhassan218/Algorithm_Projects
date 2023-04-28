@@ -68,7 +68,7 @@ public class Database {
 
 		KVPair<String, Rectangle> pair = list.remove(name);
 		Rectangle rectangle = pair.getValue();
-		if (rectangle.equals(null)) {
+		if (pair.equals(null)) {
 			System.out.println("Rectangle not found: (" + name + ")");
 		} else {
 			System.out.println("Rectangle removed: (" + name + ", " + rectangle.getX() + ", " + rectangle.getY() + ", "
@@ -91,7 +91,7 @@ public class Database {
 		Rectangle rectangle = new Rectangle(x, y, w, h);
 		KVPair<String, Rectangle> pair = list.removeByValue(rectangle);
 
-		if (pair.getKey().equals(null)) {
+		if (pair.equals(null)) {
 			System.out.println("Rectangle not found: (" + x + ", " + y + ", " + w + ", " + h + ")");
 		} else {
 			System.out.println("Rectangle removed: (" + pair.getKey() + ", " + rectangle.getX() + ", "

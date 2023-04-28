@@ -35,11 +35,6 @@ public class Rectangle {
 		return height;
 	}
 
-	// Get the area of the rectangle:
-	public int getArea() {
-		return height * width;
-	}
-
 	@Override
 	public String toString() {
 		String result = xCoordinate + ", " + yCoordinate + ", " + width + ", " + height;

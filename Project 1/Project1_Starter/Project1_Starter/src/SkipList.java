@@ -126,7 +126,7 @@ public class SkipList<K extends Comparable<? super K>, V> implements Iterable<KV
 		SkipNode node;
 		KVPair<K, V> pair;
 		while (iterator.hasNext()) {
-			node.pair = iterator.next();
+		//	node.pair = iterator.next();
 			System.out.println("Node has depth ");
 
 		}

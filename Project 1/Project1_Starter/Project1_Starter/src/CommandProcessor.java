@@ -41,10 +41,10 @@ public class CommandProcessor {
 	 */
 	public void processor(String line) {
 
+		line = line.replaceAll("\\s+", " ");
 		String[] words = line.split(" ");
-
 		switch (words[0]) {
-		case "insert":
+		case "insert":				// insert name x y w h
 			String key = words[1];
 			Rectangle value = new Rectangle(Integer.parseInt(words[2]), Integer.parseInt(words[3]),
 					Integer.parseInt(words[4]), Integer.parseInt(words[5]));
@@ -79,12 +79,13 @@ public class CommandProcessor {
 				data.search(Integer.parseInt(words[1]), Integer.parseInt(words[2]), Integer.parseInt(words[3]),
 						Integer.parseInt(words[4]));
 			} else { // search Name
-				data.search(words[0]);
+				data.search(words[1]);
 			}
 			break;
 
 		default:
 			System.out.println("Invalid command: " + words[0] + "!");
+			break;
 		}
 	}
 
