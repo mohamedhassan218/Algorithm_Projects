@@ -1,69 +1,69 @@
 import junit.framework.TestCase;
 
-public class DatabaseTest extends TestCase{
+public class DatabaseTest extends TestCase {
 	Database db = new Database();
-	
+
 	/*
 	 * Test the constructor.
 	 */
 	public void testConstructor() {
 		assertNotNull(db);
 	}
-	
+
 	/*
-	 * Test the insert method.
+	 * Test insert().
 	 */
 	public void testInsert() {
 		
 	}
-	
+
 	/*
-	 * Test remove(key) method.
+	 * Test remove(key).
 	 */
 	public void testRemoveKey() {
-		
+
 	}
-	
+
 	/*
 	 * Test remove(Value) method.
 	 */
 	public void testRemoveValue() {
-		
+
 	}
-	
+
 	/*
-	 * Test the regionsearch method.
+	 * Test regionsearch().
 	 */
 	public void testRegionSearch() {
-		
+
 	}
-	
+
 	/*
-	 * Test the intersections method.
+	 * Test intersections().
 	 */
 	public void testIntersections() {
-		
+
 	}
-	
+
 	/*
-	 * Test the search(Key) method.
+	 * Test search(Key).
 	 */
 	public void testSearchKey() {
-		
+
 	}
-	
+
 	/*
-	 * Test the search(Value) method.
+	 * Test search(Value).
 	 */
 	public void testSearchValue() {
-		
+
 	}
-	
+
 	/*
-	 * Test the dump method.
+	 * Test dump()
 	 */
 	public void testDump() {
-		
+
 	}
-	
+
 }
