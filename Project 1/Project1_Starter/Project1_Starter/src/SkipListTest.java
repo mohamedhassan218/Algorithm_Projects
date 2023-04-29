@@ -59,10 +59,20 @@ public class SkipListTest extends TestCase {
 		lst.insert(pair2);
 		lst.insert(pair3);
 		lst.insert(pair4);
-	
-		
-		
-		
+		test = lst.searchByValue(r);
+		assertNotNull(test);
+		test = lst.searchByValue(r1);
+		assertNotNull(test);
+		test = null;
+		assertNull(test);
+		test = lst.searchByValue(r2);
+		assertNotNull(test);
+		test = lst.searchByValue(r2);
+		assertNotNull(test);
+		test = lst.searchByValue(r3);
+		assertNotNull(test);
+		test = lst.searchByValue(r4);
+		assertNotNull(test);
 	}
 
 	/*
@@ -124,6 +134,7 @@ public class SkipListTest extends TestCase {
 		test = lst.remove("r");
 		assertNotNull(test);
 		test = null;
+		assertNull(test);
 		test = lst.remove("r1");
 		assertNotNull(test);
 		test = lst.remove("r2");
@@ -131,6 +142,7 @@ public class SkipListTest extends TestCase {
 		test = lst.remove("r3");
 		assertNotNull(test);
 		test = null;
+		assertNull(test);
 		test = lst.remove("r4");
 		assertNotNull(test);
 	}
@@ -146,6 +158,8 @@ public class SkipListTest extends TestCase {
 		lst.insert(pair4);
 		int test = lst.dump();
 		assertEquals(test, 1);
+		lst.remove("r2");
+		lst.dump();
 	}
 
 	/*

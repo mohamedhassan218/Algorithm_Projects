@@ -101,11 +101,12 @@ public class Database {
 	 */
 	public int remove(int x, int y, int w, int h) {
 		Rectangle rectangle = new Rectangle(x, y, w, h);
-		KVPair<String, Rectangle> pair = list.removeByValue(rectangle);
-		if (pair.equals(null)) {
+		KVPair<String, Rectangle> temp = list.removeByValue(rectangle);
+		if (temp == null) {
 			System.out.println("Rectangle not found: (" + x + ", " + y + ", " + w + ", " + h + ")");
 			return -3;
 		} else {
+			KVPair<String, Rectangle> pair = temp;
 			System.out.println("Rectangle removed: (" + pair.getKey() + ", " + rectangle.getX() + ", "
 					+ rectangle.getY() + ", " + rectangle.getWidth() + ", " + rectangle.getHeight() + ")");
 			return 3;

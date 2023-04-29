@@ -45,5 +45,4 @@ public class CommandProcessorTest extends TestCase {
 		test = cmd.processor("invalid command");
 		assertEquals(test, -1);
 	}
-
 }
