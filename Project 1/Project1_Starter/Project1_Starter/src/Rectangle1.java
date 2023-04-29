@@ -28,9 +28,9 @@ import java.util.Scanner;
  * and creates the appropriate SkipList object and outputs the correct results
  * to the console as specified in the file.
  *
- * @author (Your name here)
+ * @author Mohamed Hassan
  * 
- * @version (Date here)
+ * @version 4-29-2023
  */
 public class Rectangle1 {
 

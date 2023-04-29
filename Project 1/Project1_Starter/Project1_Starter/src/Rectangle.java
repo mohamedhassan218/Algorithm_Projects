@@ -37,7 +37,6 @@ public class Rectangle {
 
 	@Override
 	public String toString() {
-		String result = xCoordinate + ", " + yCoordinate + ", " + width + ", " + height;
-		return result;
+		return String.format("%d, %d, %d, %d", xCoordinate, yCoordinate, width, height);
 	}
 }

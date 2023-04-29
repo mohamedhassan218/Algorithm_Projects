@@ -38,8 +38,17 @@ public class CommandProcessor {
 	 * that do.
 	 * 
 	 * @param line a single line from the text file
+	 * insert returns 1
+	 * remove(V) returns 2
+	 * remove(K) returns 3
+	 * regionsearch returns 4
+	 * intersections returns 5
+	 * dump returns 6
+	 * search(V) returns 7
+	 * search(K) returns 8
+	 * invalidCommand returns -1
 	 */
-	public void processor(String line) {
+	public int processor(String line) {
 
 		line = line.replaceAll("\\s+", " ");
 		String[] words = line.split(" ");
@@ -50,42 +59,44 @@ public class CommandProcessor {
 					Integer.parseInt(words[4]), Integer.parseInt(words[5]));
 			KVPair<String, Rectangle> pair = new KVPair<String, Rectangle>(key, value);
 			data.insert(pair);
-			break;
+			return 1;
 
 		case "remove":
 			if (words.length > 2) { // remove x y w h
 				data.remove(Integer.parseInt(words[1]), Integer.parseInt(words[2]), Integer.parseInt(words[3]),
 						Integer.parseInt(words[4]));
+				return 2;
 			} else { // remove Name
 				data.remove(words[1]);
+				return 3;
 			}
-			break;
 
 		case "regionsearch":
 			data.regionsearch(Integer.parseInt(words[1]), Integer.parseInt(words[2]), Integer.parseInt(words[3]),
 					Integer.parseInt(words[4]));
-			break;
+			return 4;
 
 		case "intersections":
 			data.intersections();
-			break;
+			return 5;
 
 		case "dump":
 			data.dump();
-			break;
+			return 6;
 
 		case "search":
 			if (words.length > 2) { // search x y w h
 				data.search(Integer.parseInt(words[1]), Integer.parseInt(words[2]), Integer.parseInt(words[3]),
 						Integer.parseInt(words[4]));
+				return 7;
 			} else { // search Name
 				data.search(words[1]);
+				return 8;
 			}
-			break;
 
 		default:
 			System.out.println("Invalid command: " + words[0] + "!");
-			break;
+			return -1;
 		}
 	}
 

@@ -1,6 +1,8 @@
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 /**
  * This class is responsible for interfacing between the command processor and
@@ -38,8 +40,11 @@ public class Database {
 	 * KVPair specified into the sorted SkipList appropriately
 	 * 
 	 * @param pair the KVPair to be inserted
+	 * 
+	 * 
+	 * @returns 1 if succeed and -1 if failed to insert
 	 */
-	public void insert(KVPair<String, Rectangle> pair) {
+	public int insert(KVPair<String, Rectangle> pair) {
 
 		Rectangle rectangle = pair.getValue();
 		String name = pair.getKey();
@@ -50,10 +55,11 @@ public class Database {
 			list.insert(pair);
 			System.out.println("Rectangle inserted: (" + name + ", " + rectangle.getX() + ", " + rectangle.getY() + ", "
 					+ rectangle.getWidth() + ", " + rectangle.getHeight() + ")");
+			return 1;
 		} else {
 			System.out.println("Rectangle rejected: (" + name + ", " + rectangle.getX() + ", " + rectangle.getY() + ", "
 					+ rectangle.getWidth() + ", " + rectangle.getHeight() + ")");
-
+			return -1;
 		}
 
 	}
@@ -63,16 +69,21 @@ public class Database {
 	 * message is printed to the console.
 	 * 
 	 * @param name the name of the rectangle to be removed
+	 * 
+	 * @return 2 if succeed and -2 if failed
 	 */
-	public void remove(String name) {
+	public int remove(String name) {
 
 		KVPair<String, Rectangle> pair = list.remove(name);
-		Rectangle rectangle = pair.getValue();
-		if (pair.equals(null)) {
+
+		if (pair == null) {
 			System.out.println("Rectangle not found: (" + name + ")");
+			return -2;
 		} else {
+			Rectangle rectangle = pair.getValue();
 			System.out.println("Rectangle removed: (" + name + ", " + rectangle.getX() + ", " + rectangle.getY() + ", "
 					+ rectangle.getWidth() + ", " + rectangle.getHeight() + ")");
+			return 2;
 		}
 
 	}
@@ -85,17 +96,19 @@ public class Database {
 	 * @param y x-coordinate of the rectangle to be removed
 	 * @param w width of the rectangle to be removed
 	 * @param h height of the rectangle to be removed
+	 * 
+	 * @return 3 if succeed and -3 if failed.
 	 */
-	public void remove(int x, int y, int w, int h) {
-
+	public int remove(int x, int y, int w, int h) {
 		Rectangle rectangle = new Rectangle(x, y, w, h);
 		KVPair<String, Rectangle> pair = list.removeByValue(rectangle);
-
 		if (pair.equals(null)) {
 			System.out.println("Rectangle not found: (" + x + ", " + y + ", " + w + ", " + h + ")");
+			return -3;
 		} else {
 			System.out.println("Rectangle removed: (" + pair.getKey() + ", " + rectangle.getX() + ", "
 					+ rectangle.getY() + ", " + rectangle.getWidth() + ", " + rectangle.getHeight() + ")");
+			return 3;
 		}
 	}
 
@@ -109,8 +122,10 @@ public class Database {
 	 * @param y y-Coordinate of the region
 	 * @param w width of the region
 	 * @param h height of the region
+	 * 
+	 * @return 4.
 	 */
-	public void regionsearch(int x, int y, int w, int h) {
+	public int regionsearch(int x, int y, int w, int h) {
 		if (x >= 0 && y >= 0 && w > 0 && h > 0) {
 			Iterator<KVPair<String, Rectangle>> iterator = list.iterator();
 			KVPair<String, Rectangle> pair;
@@ -126,15 +141,43 @@ public class Database {
 		} else {
 			System.out.println("Rectangle rejected: (" + x + ", " + y + ", " + w + ", " + h + ")");
 		}
+		return 4;
 	}
 
 	/**
 	 * Prints out all the rectangles that Intersect each other by calling the
 	 * SkipList method for intersections. You will need to use two SkipList
 	 * Iterators for this
+	 * 
+	 * @return 5
 	 */
-	public void intersections() {
-
+	public int intersections() {
+		// To keep track of which keys was checked at any order and don't duplicate.
+		Set<String> checkedKeys = new HashSet<>();
+		System.out.println("Intersection pairs:");
+		Iterator<KVPair<String, Rectangle>> outerIterator = list.iterator();
+		while (outerIterator.hasNext()) {
+			KVPair<String, Rectangle> outerNode = outerIterator.next();
+			Iterator<KVPair<String, Rectangle>> innerIterator = list.iterator();
+			while (innerIterator.hasNext()) {
+				KVPair<String, Rectangle> innerNode = innerIterator.next();
+				if (!checkedKeys.contains(outerNode.getKey() + innerNode.getKey())
+						&& !checkedKeys.contains(innerNode.getKey() + outerNode.getKey()) && outerNode != innerNode
+						&& (outerNode.getValue().getX() >= innerNode.getValue().getX())
+						&& (outerNode.getValue()
+								.getX() <= (innerNode.getValue().getX() + innerNode.getValue().getWidth()))
+						&& (outerNode.getValue().getY() >= innerNode.getValue().getY()) && (outerNode.getValue()
+								.getY() <= (innerNode.getValue().getY() + innerNode.getValue().getHeight()))) {
+					System.out.println("(" + outerNode.getKey() + ", " + outerNode.getValue().getX() + ", "
+							+ outerNode.getValue().getY() + ", " + outerNode.getValue().getWidth() + ", "
+							+ outerNode.getValue().getHeight() + " | " + innerNode.getKey() + ", "
+							+ innerNode.getValue().getX() + ", " + innerNode.getValue().getY() + ", "
+							+ innerNode.getValue().getWidth() + ", " + innerNode.getValue().getHeight() + ")");
+					checkedKeys.add(outerNode.getKey() + innerNode.getKey());
+				}
+			}
+		}
+		return 5;
 	}
 
 	/**
@@ -142,30 +185,40 @@ public class Database {
 	 * method will delegate the searching to the SkipList class completely.
 	 * 
 	 * @param name name of the Rectangle to be searched for
+	 * 
+	 * @return 6 if succeed and -6 if failed.
 	 */
-	public void search(String name) {
+	public int search(String name) {
 		ArrayList<KVPair<String, Rectangle>> result = list.search(name);
-		if (result.size() == 0)
+		if (result.size() == 0) {
 			System.out.println("Rectangle not found: " + name);
-		else {
+			return -6;
+		} else {
 			for (KVPair<String, Rectangle> pair : result)
 				System.out.println("(" + pair.getKey() + ", " + pair.getValue().getX() + ", " + pair.getValue().getY()
 						+ ", " + pair.getValue().getWidth() + ", " + pair.getValue().getHeight() + ")");
 		}
+		return 6;
 	}
 
-	// To search by values.
-	public void search(int x, int y, int w, int h) {
+	/*
+	 * To search by values.
+	 * 
+	 * @return 7 if succeed and -7 if failed.
+	 */
+	public int search(int x, int y, int w, int h) {
 		Rectangle rectangle = new Rectangle(x, y, w, h);
 		ArrayList<KVPair<String, Rectangle>> result = list.searchByValue(rectangle);
 		if (result.size() == 0) {
 			System.out.println("Rectangle not found: (" + x + ", " + y + ", " + w + ", " + h + ")");
+			return -7;
 		} else {
 			for (KVPair<String, Rectangle> pair : result) {
 				System.out.println("(" + pair.getKey() + ", " + pair.getValue().getX() + ", " + pair.getValue().getY()
 						+ ", " + pair.getValue().getWidth() + ", " + pair.getValue().getHeight() + ")");
 			}
 		}
+		return 7;
 	}
 
 	/**
@@ -173,8 +226,9 @@ public class Database {
 	 * of the SkipList and shows all of the contents of the SkipList. This will all
 	 * be delegated to the SkipList.
 	 */
-	public void dump() {
+	public int dump() {
 		list.dump();
+		return 8;
 	}
 
 }

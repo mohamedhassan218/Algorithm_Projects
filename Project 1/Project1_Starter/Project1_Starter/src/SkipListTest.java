@@ -52,6 +52,7 @@ public class SkipListTest extends TestCase {
 	public void testAdjustHead() {
 		skipList.adjustHead(80);
 		assertEquals(skipList.level(), 80);
+		
 	}
 
 	/*
