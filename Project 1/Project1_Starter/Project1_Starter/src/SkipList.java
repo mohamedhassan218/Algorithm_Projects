@@ -213,7 +213,7 @@ public class SkipList<K extends Comparable<? super K>, V> implements Iterable<KV
 	/**
 	 * Prints out the SkipList in a human readable format to the console.
 	 */
-	public void dump() {
+	public int dump() {
 		System.out.println("SkipList dump:");
 		System.out.println("Node has depth " + level + ", Value (null)");
 		SkipNode current = head;
@@ -223,6 +223,7 @@ public class SkipList<K extends Comparable<? super K>, V> implements Iterable<KV
 			System.out.println(current.pair);
 		}
 		System.out.println("SkipList size is : " + size);
+		return 1;
 	}
 
 	/**

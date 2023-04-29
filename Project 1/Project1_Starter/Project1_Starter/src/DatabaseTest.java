@@ -11,6 +11,9 @@ public class DatabaseTest extends TestCase {
 	KVPair<String, Rectangle> pair4 = new KVPair<String, Rectangle>("r4", new Rectangle(14, 14, 43, 59));
 	KVPair<String, Rectangle> pair5 = new KVPair<String, Rectangle>("r5", new Rectangle(14000, 14, 43, 59));
 	KVPair<String, Rectangle> pair6 = new KVPair<String, Rectangle>("r6", new Rectangle(1400, 14, 43, 59));
+	KVPair<String, Rectangle> pair7 = new KVPair<String, Rectangle>("r7", new Rectangle(100, 140, 43, 59));
+	KVPair<String, Rectangle> pair8 = new KVPair<String, Rectangle>("r8", new Rectangle(19, 10, 43, 59));
+	KVPair<String, Rectangle> pair9 = new KVPair<String, Rectangle>("r9", new Rectangle(7, 7, 40, 50));
 	
 	/*
 	 * Test the constructor.
@@ -70,41 +73,120 @@ public class DatabaseTest extends TestCase {
 	 * Test remove(Value) method.
 	 */
 	public void testRemoveValue() {
-		
+		int test;
+		db.insert(pair);
+		db.insert(pair7);
+		db.insert(pair8);
+		test = db.remove(10, 10, 40, 50);
+		assertEquals(test, 3);
+		test = db.remove(100, 140, 43, 59);
+		assertEquals(test, 3);
+		test = db.remove(19, 10, 43, 59);
+		assertEquals(test, 3);
 	}
 
 	/*
 	 * Test regionsearch().
 	 */
 	public void testRegionSearch() {
-
+		db.insert(pair);
+		db.insert(pair1);
+		db.insert(pair3);
+		db.insert(pair4);
+		db.insert(pair7);
+		db.insert(pair8);
+		int test;
+		test = db.regionsearch(5, 5, 200, 200);
+		assertEquals(test, 4);
+		test = db.regionsearch(10, 56, 23, 20);
+		assertEquals(test, 4);
+		test = db.regionsearch(0, 1, 200, 200);
+		assertEquals(test, 4);
 	}
 
 	/*
 	 * Test intersections().
 	 */
 	public void testIntersections() {
-
+		db.insert(pair);
+		db.insert(pair1);
+		db.insert(pair3);
+		db.insert(pair4);
+		db.insert(pair7);
+		db.insert(pair8);
+		int test = db.intersections();
+		assertEquals(test, 5);
 	}
 
 	/*
 	 * Test search(Key).
 	 */
 	public void testSearchKey() {
-
+		int test;
+		db.insert(pair);
+		db.insert(pair1);
+		db.insert(pair3);
+		db.insert(pair4);
+		db.insert(pair7);
+		db.insert(pair8);
+		db.insert(pair9);
+		test = db.search("r");
+		assertEquals(test, 6);
+		test = db.search("r1");
+		assertEquals(test, 6);
+		test = db.search("r3");
+		assertEquals(test, 6);
+		test = db.search("r4");
+		assertEquals(test, 6);
+		test = db.search("r7");
+		assertEquals(test, 6);
+		test = db.search("r8");
+		assertEquals(test, 6);
+		test = db.search("r22");
+		assertEquals(test, -6);
+		test = db.search("r9");
+		assertEquals(test, 6);
+		test = db.search("r555");
+		assertEquals(test, -6);
 	}
 
 	/*
 	 * Test search(Value).
 	 */
 	public void testSearchValue() {
-
+		int test;
+		db.insert(pair);
+		db.insert(pair1);
+		db.insert(pair3);
+		db.insert(pair4);
+		db.insert(pair7);
+		db.insert(pair8);
+		db.insert(pair9);
+		test = db.search(10, 10, 40, 50);
+		assertEquals(test, 7);
+		test = db.search(10, 110, 40, 50);
+		assertEquals(test, -7);
+		test = db.search(100, 140, 43, 59);
+		assertEquals(test, 7);
+		test = db.search(14, 14, 43, 59);
+		assertEquals(test, 7);
+		test = db.search(30, 3, 5, 5);
+		assertEquals(test, 7);
+		test = db.search(1000, 20, 22, 3333);
+		assertEquals(test, -7);
 	}
 
 	/*
 	 * Test dump()
 	 */
 	public void testDump() {
+		db.insert(pair);
+		db.insert(pair1);
+		db.insert(pair3);
+		db.insert(pair4);
+		db.insert(pair7);
+		db.insert(pair8);
+		db.insert(pair9);
 		int test = db.dump();
 		assertEquals(test, 8);
 	}

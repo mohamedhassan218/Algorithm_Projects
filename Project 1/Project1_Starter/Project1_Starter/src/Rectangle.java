@@ -39,4 +39,5 @@ public class Rectangle {
 	public String toString() {
 		return String.format("%d, %d, %d, %d", xCoordinate, yCoordinate, width, height);
 	}
+
 }
