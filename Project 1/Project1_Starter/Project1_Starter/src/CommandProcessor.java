@@ -1,4 +1,4 @@
-import java.awt.Rectangle;
+
 
 /**
  * The purpose of this class is to parse a text file into its appropriate, line

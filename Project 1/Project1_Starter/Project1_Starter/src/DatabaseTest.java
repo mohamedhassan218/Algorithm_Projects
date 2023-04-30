@@ -1,4 +1,3 @@
-import java.awt.Rectangle;
 
 import junit.framework.TestCase;
 
